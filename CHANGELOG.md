@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### New
+* New `PaparazziExtension` for JUnit 5 with automatic Gradle test report image attachments via `ExtensionContext.publishFile()` (requires JUnit 5.12+ / Gradle 9.4+)
+* New `FrameHandler.outputFile` property exposing the output file produced by each snapshot or gif
+* New `PaparazziExtension.updateConfig()` API as an alternative to `unsafeUpdateConfig()`
+
 ## [2.0.0-alpha04] - 2026-01-20
 
 As of this release, consumers must build on Java 21+ environments.

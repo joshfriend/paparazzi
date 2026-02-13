@@ -191,6 +191,33 @@ public final class app/cash/paparazzi/Paparazzi : org/junit/rules/TestRule {
 	public static synthetic fun unsafeUpdateConfig$default (Lapp/cash/paparazzi/Paparazzi;Lapp/cash/paparazzi/DeviceConfig;Ljava/lang/String;Lcom/android/ide/common/rendering/api/SessionParams$RenderingMode;ILjava/lang/Object;)V
 }
 
+public final class app/cash/paparazzi/PaparazziExtension : org/junit/jupiter/api/extension/AfterEachCallback, org/junit/jupiter/api/extension/BeforeEachCallback {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (Lkotlin/jvm/functions/Function0;)V
+	public synthetic fun <init> (Lkotlin/jvm/functions/Function0;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun afterEach (Lorg/junit/jupiter/api/extension/ExtensionContext;)V
+	public fun beforeEach (Lorg/junit/jupiter/api/extension/ExtensionContext;)V
+	public final fun getContext ()Landroid/content/Context;
+	public final fun getLayoutInflater ()Landroid/view/LayoutInflater;
+	public final fun getResources ()Landroid/content/res/Resources;
+	public final fun gif (Landroid/view/View;)V
+	public final fun gif (Landroid/view/View;Ljava/lang/String;)V
+	public final fun gif (Landroid/view/View;Ljava/lang/String;J)V
+	public final fun gif (Landroid/view/View;Ljava/lang/String;JJ)V
+	public final fun gif (Landroid/view/View;Ljava/lang/String;JJI)V
+	public static synthetic fun gif$default (Lapp/cash/paparazzi/PaparazziExtension;Landroid/view/View;Ljava/lang/String;JJIILjava/lang/Object;)V
+	public final fun inflate (I)Landroid/view/View;
+	public final fun snapshot (Landroid/view/View;)V
+	public final fun snapshot (Landroid/view/View;Ljava/lang/String;)V
+	public final fun snapshot (Landroid/view/View;Ljava/lang/String;J)V
+	public final fun snapshot (Ljava/lang/String;Lkotlin/jvm/functions/Function2;)V
+	public static synthetic fun snapshot$default (Lapp/cash/paparazzi/PaparazziExtension;Landroid/view/View;Ljava/lang/String;JILjava/lang/Object;)V
+	public static synthetic fun snapshot$default (Lapp/cash/paparazzi/PaparazziExtension;Ljava/lang/String;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+	public final fun updateConfig (Lapp/cash/paparazzi/DeviceConfig;Ljava/lang/String;Lcom/android/ide/common/rendering/api/SessionParams$RenderingMode;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun updateConfig$default (Lapp/cash/paparazzi/PaparazziExtension;Lapp/cash/paparazzi/DeviceConfig;Ljava/lang/String;Lcom/android/ide/common/rendering/api/SessionParams$RenderingMode;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+}
+
 public final class app/cash/paparazzi/PaparazziSdk {
 	public static final field $stable I
 	public fun <init> (Lapp/cash/paparazzi/Environment;Lapp/cash/paparazzi/DeviceConfig;Ljava/lang/String;Lcom/android/ide/common/rendering/api/SessionParams$RenderingMode;Lkotlin/jvm/functions/Function1;)V
@@ -251,7 +278,12 @@ public abstract interface class app/cash/paparazzi/SnapshotHandler : java/io/Clo
 }
 
 public abstract interface class app/cash/paparazzi/SnapshotHandler$FrameHandler : java/io/Closeable {
+	public fun getOutputFile ()Ljava/io/File;
 	public abstract fun handle (Ljava/awt/image/BufferedImage;)V
+}
+
+public final class app/cash/paparazzi/SnapshotHandler$FrameHandler$DefaultImpls {
+	public static fun getOutputFile (Lapp/cash/paparazzi/SnapshotHandler$FrameHandler;)Ljava/io/File;
 }
 
 public final class app/cash/paparazzi/SnapshotHandlerKt {

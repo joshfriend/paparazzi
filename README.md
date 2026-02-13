@@ -31,6 +31,48 @@ class LaunchViewTest {
 }
 ```
 
+### JUnit 5
+
+Paparazzi also supports JUnit 5 via `PaparazziExtension`. With Gradle 9.4+ and JUnit 5.12+,
+snapshot images are automatically attached to the Gradle HTML test report.
+
+```kotlin
+class LaunchViewTest {
+  @JvmField
+  @RegisterExtension
+  val paparazzi = PaparazziExtension {
+    Paparazzi(
+      deviceConfig = PIXEL_5,
+      theme = "android:Theme.Material.Light.NoActionBar"
+    )
+  }
+
+  @Test
+  fun launchView() {
+    val view = paparazzi.inflate<LaunchView>(R.layout.launch)
+    view.setModel(LaunchModel(title = "paparazzi"))
+    paparazzi.snapshot(view)
+  }
+
+  @Test
+  fun launchComposable() {
+    paparazzi.snapshot {
+      MyComposable()
+    }
+  }
+
+  @Test
+  fun multipleThemes() {
+    paparazzi.updateConfig(theme = "android:Theme.Material.Light") {
+      snapshot(name = "light") { MyComposable() }
+    }
+    paparazzi.updateConfig(theme = "android:Theme.Material") {
+      snapshot(name = "dark") { MyComposable() }
+    }
+  }
+}
+```
+
 See the [project website][paparazzi] for documentation and APIs.
 
 Supporting Multiple Test Frameworks

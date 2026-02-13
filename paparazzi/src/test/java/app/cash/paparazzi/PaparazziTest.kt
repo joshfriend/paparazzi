@@ -33,6 +33,7 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
+import java.io.File
 import java.util.concurrent.TimeUnit
 
 class PaparazziTest {
@@ -242,6 +243,58 @@ class PaparazziTest {
     paparazzi.gif(view, fps = 4)
 
     assertThat(log).isEqualTo(listOf("predraw", "draw", "draw", "predraw", "predraw", "predraw"))
+  }
+
+  @Test
+  fun onSnapshotFileCalledAfterSnapshot() {
+    val capturedFiles = mutableListOf<File>()
+    paparazzi.onSnapshotFile = { file -> capturedFiles += file }
+
+    val view = View(paparazzi.context)
+    paparazzi.snapshot(view)
+
+    assertThat(capturedFiles).hasSize(1)
+    assertThat(capturedFiles[0].exists()).isTrue()
+    assertThat(capturedFiles[0].name).endsWith(".png")
+  }
+
+  @Test
+  fun onSnapshotFileCalledAfterGif() {
+    val capturedFiles = mutableListOf<File>()
+    paparazzi.onSnapshotFile = { file -> capturedFiles += file }
+
+    val view = View(paparazzi.context)
+    paparazzi.gif(view, start = 0L, end = 500L, fps = 4)
+
+    assertThat(capturedFiles).hasSize(1)
+    assertThat(capturedFiles[0].exists()).isTrue()
+    assertThat(capturedFiles[0].name).endsWith(".png")
+  }
+
+  @Test
+  fun onSnapshotFileNotCalledWhenCallbackIsNull() {
+    paparazzi.onSnapshotFile = null
+
+    val view = View(paparazzi.context)
+    // Should not throw
+    paparazzi.snapshot(view)
+  }
+
+  @Test
+  fun onSnapshotFileCalledForMultipleSnapshots() {
+    val capturedFiles = mutableListOf<File>()
+    paparazzi.onSnapshotFile = { file -> capturedFiles += file }
+
+    val view1 = View(paparazzi.context)
+    val view2 = View(paparazzi.context).apply {
+      setBackgroundColor(Color.RED)
+    }
+    paparazzi.snapshot(view1, name = "first")
+    paparazzi.snapshot(view2, name = "second")
+
+    assertThat(capturedFiles).hasSize(2)
+    // Different views produce different content hashes and thus different files
+    assertThat(capturedFiles[0]).isNotEqualTo(capturedFiles[1])
   }
 
   private val time: Long
